@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        <link rel="stylesheet" href="{{url('css/w3.css')}}">
         <title>Digital Library Information System</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{{url('user/assets/favicon.ico')}}" />
@@ -17,6 +18,56 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{url('user/css/styles.css')}}" rel="stylesheet" />
+        <style>
+            #container_holder .book_item_container{
+                display: flex;
+                margin: 10px 0px;
+            }
+            #container_holder .book_item_container .book_item_container_left{
+                flex: 1;
+                overflow: hidden;
+            }
+            #container_holder .book_item_container .book_item_container_left img{
+                width: 100%;
+                height: 300px;
+            }
+            #container_holder .book_item_container .book_item_container_right{
+                width: 55%;
+                display: flex;
+                padding: 15px;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            #container_holder .book_item_container .book_item_container_right .top{
+                flex: 1
+            }
+
+            #container_holder .book_item_container .book_item_container_right .top .author{
+
+            }
+
+            #container_holder .book_item_container .book_item_container_right .bottom a *{
+                width: 100%;
+                font-weight: 900;
+                font-size: 38
+            }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function load_search_result(){
+                var txt = $("input[name='search_text']").val();
+                var box = $('#container_holder');
+
+                box.html('loading');
+
+                $.get('{{url('/get_booking_from_search')}}?search='+txt,  // url
+                function (data, textStatus, jqXHR) {  // success callback
+                    box.html(data);
+                });
+            }
+        </script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -26,10 +77,10 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#sign-in">SIGN IN</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#register">REGISTER MATRIC</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">{{base64_decode($_COOKIE[sha1('matric_for_user_signed_in_bidemi_project')])}}</a></li>
                         {{-- <li class="nav-item"><a class="nav-link" href="#portfolio">INFO</a></li> --}}
                         <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{url('/logout')}}">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
@@ -44,145 +95,64 @@
                     </div>
                     <div class="col-lg-8 align-self-baseline">
                         <p class="text-white-75 mb-5">Building a comprehensive digital library system will help users to manage all phases of the information lifecycle!</p>
-                        <a class="btn btn-primary btn-xl" href="#sign-in">SIGN IN</a>
+                        <a class="btn btn-primary btn-xl" href="#books">EXPLORE</a>
                     </div>
                 </div>
             </div>
         </header>
-        <!-- sign-in-->
-        <section class="page-section bg-primary" id="sign-in">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8 text-center">
-                        <h2 class="text-white mt-0">WELCOME!</h2>
-                        <hr class="divider divider-light" />
-                        {{-- <p class="text-white-75 mb-4">Building a comprehensive digital library system will help users to manage all phases of the information lifecycle.!</p> --}}
-                        <form class="form-group" method="POST" action="{{url('users/login_user')}}">
-                            <div class="form-group">
-                                <input class="form-control" name="matric" placeholder="Enter Matric Number" required/>
-                                <label class="form-check-label label">Matric</label>
-                            </div>
-                            <br />
 
-                            <div class="form-group">
-                                <input class="form-control" type="password" name="password" placeholder="Enter Password" required/>
-                                <label class="form-check-label label">Password</label>
-                            </div>
-                            <br />
+        <section id='books' style="display: flex; padding: 15px 0px">
+            {{-- @yield('content') --}}
+            <div id='left' style="flex: 1">
+                <div class="w3-container w3-padding">
+                    <h1 class="w3-center">books</h1>
+                    <br />
 
-                            @if (isset($login_message))
-                                <div class="alert center">{{$login_message}}</div>
-                            @endif
+                    {{-- container for search --}}
+                    <div class="" style="display: flex">
+                        <input name="search_text" class="w3-input" type="search" placeholder="search by name, faculty, department, author, e.t.c" />
+                        <img class="" onclick="load_search_result()" src="https://www.vippng.com/png/detail/501-5013902_search-icon-lupe-icon-png-free.png" style="width: 60px; cursor: pointer;" />
+                    </div>
 
-                            <div class="form-group">
-                                @csrf
-                                <input class="btn px-5 py-2 btn-outline-secondary" type="submit" value="LOGIN" required/>
+                    {{-- container for displaying books item --}}
+                    <div class="w3-container" id='container_holder'>
+                        @foreach ($data['books'] as $dt)
+
+                            <div class="book_item_container w3-card w3-round">
+                                <div class="book_item_container_left">
+                                    <img src="https://corestationers.co.za/wp-content/uploads/woocommerce-placeholder-300x300.png"/>
+                                </div>
+                                <div class="book_item_container_right">
+                                    <div class="top">
+                                        <h2>{{$dt->b_name}}</h2>
+                                        <div><p class="author">Faculty: {{$dt->f_name}}</p></div>
+                                        <div><p class="author">Department: {{$dt->d_name}}</p></div>
+                                        <div><p class="author">Author: {{$dt->b_author}}</p></div>
+                                    </div>
+                                    <div class="bottom">
+                                        <a href="{{$dt->b_path}}" target="_blank"><button class="w3-btn w3-btn-block w3-green">GET BOOK</button></a>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
+
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div id='right' class="" style="width: 25%">
+                <h1>publication notice</h1>
+                @foreach ($data['publication'] as $dt)
+                    <div class="w3-card w3-round w3-padding w3-margin">
+                        <h6 style="color: gray">{{$dt->p_title}}</h6>
+                        <p style="font-size: 11px">{{$dt->p_content}}</p>
+                        <div style="font-style: italic; font-size: 11px" class="w3-right">{{date('d M Y', strtotime($dt->date_created))}}</div>
                         <br />
-                        <a class="btn btn-light btn-xl" href="#register">NEED AN ACCOUNT!</a>
+                        <br />
                     </div>
-                </div>
+                @endforeach
             </div>
         </section>
-        <!-- register-->
-        <section class="page-section" id="register">
-            <div class="container px-4 px-lg-5">
-                <h2 class="text-center mt-0">Create an Account</h2>
-                <hr class="divider" />
-                <form class="form-group" method="POST" action="{{url('users/register_user')}}">
-                    <div class="form-group">
-                        <input class="form-control" name="matric" placeholder="Enter Matric Number" required/>
-                        <label class="form-check-label label">Matric</label>
-                    </div>
-                    <br />
 
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="Enter Password" required/>
-                        <label class="form-check-label label">Password</label>
-                    </div>
-                    <br />
-
-                    @if (isset($registration_message))
-                        <div class="alert center">{{$registration_message}}</div>
-                    @endif
-
-                    <div class="form-group">
-                        @csrf
-                        <input style="width: 100%" class="btn btn-block btn-outline-secondary" type="submit" value="REGISTER" required/>
-                    </div>
-                </form>
-            </div>
-        </section>
-        <!-- Portfolio-->
-        {{-- <div id="portfolio">
-            <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="..." />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="..." />
-                            <div class="portfolio-box-caption p-3">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- Call to action-->
-        {{-- <section class="page-section bg-dark text-white">
-            <div class="container px-4 px-lg-5 text-center">
-                <h2 class="mb-4">Free Download at Start Bootstrap!</h2>
-                <a class="btn btn-light btn-xl" href="https://startbootstrap.com/theme/creative/">Download Now!</a>
-            </div>
-        </section> --}}
-        <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">

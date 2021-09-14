@@ -28,4 +28,5 @@ class Auth extends Controller
         return redirect(url('admin/'));
 
     }
+
 }

@@ -18,6 +18,23 @@ Route::get('/', function () {
 Route::group(['namespace'=>'Users'], function(){
     // auth
     Route::post('users/register_user', 'Auth@register_user');
+
+    Route::get('users/login_user', function(){return view('user.unauth.index');});
+    Route::post('users/login_user', 'Auth@login_user');
+
+    // middleware routes
+    Route::middleware(['user_auth'])->group(function () {
+        Route::get('/home', 'Home@home');
+        Route::get('/get_booking_from_search', 'Home@get_booking_from_search');
+
+        // logout
+        Route::get('/logout', function(){
+            setcookie(sha1('is_user_signed_in_bidemi_project'), md5('true'), intval(time() - 365 * 10 * (86400 * 30)), "/");
+            setcookie(sha1('id_for_user_signed_in_bidemi_project'), base64_encode('0'), intval(time() - 365 * 10 * (86400 * 30)), "/");
+            setcookie(sha1('matric_for_user_signed_in_bidemi_project'), base64_encode('0'), intval(time() - 365 * 10 * (86400 * 30)), "/");
+            return redirect('/');
+        });
+    });
 });
 
 Route::group(['namespace'=>'Admin', 'prefix' => 'admin'], function(){
