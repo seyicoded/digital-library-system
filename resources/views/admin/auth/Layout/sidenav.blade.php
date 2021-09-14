@@ -93,9 +93,9 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{url('/admin/view-banners')}}">Add</a>
-                            <a href="{{url('/admin/view-banners')}}">View</a>
-                            <a href="{{url('/admin/view-banners')}}">Pendings</a>
+                            <a href="{{url('/admin/add-students')}}">Add</a>
+                            <a href="{{url('/admin/view-students')}}">View</a>
+                            <a href="{{url('/admin/view-pending-students')}}">Pendings</a>
                         </li>
                     </ul>
                 </li>

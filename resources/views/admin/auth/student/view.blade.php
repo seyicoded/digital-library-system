@@ -8,8 +8,8 @@
             <thead class="w3-lightblue">
                 <tr class="w3-lightblue">
                     <th>s/n</th>
-                    <th>faculty name</th>
-                    <th>department name</th>
+                    <th>matric</th>
+                    <th>status</th>
                     <th>date</th>
                 </tr>
             </thead>

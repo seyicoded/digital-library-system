@@ -51,4 +51,22 @@ class Home extends Controller
         $sql = DB::select('SELECT * from department ORDER BY d_id, f_name DESC', []);
         return view('admin.auth.department.view')->with('data', ['_data' => $sql]);
     }
+
+    public function add_students(){
+        return view('admin.auth.student.add');
+    }
+
+    public function add_students_now(Request $request){
+        $matric = strtolower($request->matric);
+        $password = sha1(strtolower($request->password));
+
+        DB::insert('INSERT into users (matric_numb, password, status) values (?, ?, ?)', [$matric, $password, 1]);
+
+        return redirect('/admin/view-students');
+    }
+
+    public function view_students(){
+        $sql = DB::select('SELECT * from users ORDER BY u_id DESC', []);
+        return view('admin.auth.student.view')->with('data', ['_data' => $sql]);
+    }
 }

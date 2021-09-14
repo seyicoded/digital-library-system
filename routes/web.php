@@ -44,5 +44,11 @@ Route::group(['namespace'=>'Admin', 'prefix' => 'admin'], function(){
         Route::get('/add-department', 'Home@add_department');
         Route::post('/add-department', 'Home@add_department_now');
         Route::get('/view-department', 'Home@view_department');
+
+        // student
+        Route::get('/add-students', 'Home@add_students');
+        Route::post('/add-students', 'Home@add_students_now');
+        Route::get('/view-students', 'Home@view_students');
+
     });
 });
