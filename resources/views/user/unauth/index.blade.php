@@ -70,7 +70,10 @@
                             </div>
                             <br />
 
+                            <div class="alert"></div>
+
                             <div class="form-group">
+                                @csrf
                                 <input class="btn px-5 py-2 btn-outline-secondary" type="submit" value="LOGIN" required/>
                             </div>
                         </form>
@@ -85,7 +88,7 @@
             <div class="container px-4 px-lg-5">
                 <h2 class="text-center mt-0">Create an Account</h2>
                 <hr class="divider" />
-                <form class="form-group">
+                <form class="form-group" method="POST" action="{{url('users/register_user')}}">
                     <div class="form-group">
                         <input class="form-control" name="matric" placeholder="Enter Matric Number" required/>
                         <label class="form-check-label label">Matric</label>
@@ -98,7 +101,12 @@
                     </div>
                     <br />
 
+                    @if (isset($registration_message))
+                        <div class="alert center">{{$registration_message}}</div>
+                    @endif
+
                     <div class="form-group">
+                        @csrf
                         <input style="width: 100%" class="btn btn-block btn-outline-secondary" type="submit" value="REGISTER" required/>
                     </div>
                 </form>
