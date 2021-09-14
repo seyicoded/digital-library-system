@@ -69,4 +69,21 @@ class Home extends Controller
         $sql = DB::select('SELECT * from users ORDER BY u_id DESC', []);
         return view('admin.auth.student.view')->with('data', ['_data' => $sql]);
     }
+
+    public function view_pending_students(){
+        $sql = DB::select('SELECT * from users WHERE status = ? ORDER BY u_id DESC', [0]);
+        return view('admin.auth.student.view_pending')->with('data', ['_data' => $sql]);
+    }
+
+    public function approve_student(Request $request){
+        $u_id = $request->u_id;
+        DB::update('UPDATE users set status = 1 where u_id = ?', [$u_id]);
+        return back();
+    }
+
+    public function decline_student(Request $request){
+        $u_id = $request->u_id;
+        DB::update('UPDATE users set status = 2 where u_id = ?', [$u_id]);
+        return back();
+    }
 }

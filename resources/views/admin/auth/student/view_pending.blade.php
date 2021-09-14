@@ -1,7 +1,7 @@
 @extends('admin.auth.Layout.app')
 @section('content')
     <div>
-        <h1 class="w3-center">View Student</h1>
+        <h1 class="w3-center">View Pending Students</h1>
         <br />
 
         <table class="w3-table w3-bordered w3-striped w3-border w3-hoverable">
@@ -9,8 +9,9 @@
                 <tr class="w3-lightblue">
                     <th>s/n</th>
                     <th>matric</th>
-                    <th>status</th>
                     <th>date</th>
+                    <th>action</th>
+                    <th>action</th>
                 </tr>
             </thead>
 
@@ -25,8 +26,9 @@
                     <tr>
                         <td>{{$dt->u_id}}</td>
                         <td>{{$dt->matric_numb}}</td>
-                        <td>{{(intval($dt->status) == 0) ? 'pending' : ( (intval($dt->status) == 1) ? 'approved' : 'declined' ) }}</td>
                         <td>{{date("d M Y", strtotime($dt->date_created))}}</td>
+                        <td><button class="w3-btn w3-blue w3-round" onclick="window.location.href = '{{url('/admin/approve-student').'?u_id='.$dt->u_id}}'">approve</button></td>
+                        <td><button class="w3-btn w3-red w3-round" onclick="window.location.href = '{{url('/admin/decline-student').'?u_id='.$dt->u_id}}'">decline</button></td>
                     </tr>
                 @endforeach
 
