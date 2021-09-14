@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\TermiiSms;
 use Illuminate\Support\Facades\DB;
+use JD\Cloudder\Facades\Cloudder;
 
 class Home extends Controller
 {
@@ -86,4 +87,43 @@ class Home extends Controller
         DB::update('UPDATE users set status = 2 where u_id = ?', [$u_id]);
         return back();
     }
+
+    public function add_books(){
+        $sql = DB::select('SELECT * from faculty ORDER BY f_id DESC', []);
+        return view('admin.auth.books.add')->with('data', ['_data' => $sql]);
+    }
+
+    public function get_department(Request $request){
+        $f_name = $request->f_name;
+
+        $sql = DB::select('SELECT * from department WHERE f_name = ?', [$f_name]);
+        $s = '';
+        foreach ($sql as $dt) {
+            $s = $s . "<option value='".$dt->d_name."'>".$dt->d_name."</option>";
+        }
+
+        return $s;
+    }
+
+    public function add_books_now(Request $request){
+        Cloudder::upload($request->file('file'));
+        $cloundary_upload = Cloudder::getResult();
+        $url = $cloundary_upload['url'];
+
+        $f_name = $request->f_name;
+        $d_name = $request->d_name;
+        $b_name = $request->b_name;
+        $b_author = $request->b_author;
+
+        // insert
+        DB::insert('INSERT into books (f_name, d_name, b_name, b_author, b_path) values (?, ?, ?, ?, ?)', [$f_name, $d_name, $b_name, $b_author, $url]);
+
+        return redirect('/admin/view-books');
+    }
+
+    public function view_books(){
+        $sql = DB::select('SELECT * from books ORDER BY b_id DESC', []);
+        return view('admin.auth.books.view')->with('data', ['_data' => $sql]);
+    }
 }
+

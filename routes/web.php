@@ -53,6 +53,11 @@ Route::group(['namespace'=>'Admin', 'prefix' => 'admin'], function(){
         Route::get('/approve-student', 'Home@approve_student');
         Route::get('/decline-student', 'Home@decline_student');
 
+        // books
+        Route::get('/get_department', 'Home@get_department');
+        Route::get('/add-books', 'Home@add_books');
+        Route::post('/add-books', 'Home@add_books_now');
+        Route::get('/view-books', 'Home@view_books');
 
     });
 });

@@ -61,8 +61,8 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{url('/admin/create-category')}}">ADD Book</a>
-                            <a href="{{url('/admin/view-categories')}}">View Books</a>
+                            <a href="{{url('/admin/add-books')}}">ADD Book</a>
+                            <a href="{{url('/admin/view-books')}}">View Books</a>
                         </li>
                     </ul>
                 </li>
