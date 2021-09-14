@@ -59,5 +59,17 @@ Route::group(['namespace'=>'Admin', 'prefix' => 'admin'], function(){
         Route::post('/add-books', 'Home@add_books_now');
         Route::get('/view-books', 'Home@view_books');
 
+        // publication
+        Route::get('/add-publication', 'Home@add_publication');
+        Route::post('/add-publication', 'Home@add_publication_now');
+        Route::get('/view-publication', 'Home@view_publication');
+
+        // logout
+        Route::get('/logout', function(){
+            setcookie(sha1('is_admin_signed_in_bidemi_project'), md5('true'), intval(time() - 365 * 10 * (86400 * 30)), "/");
+            setcookie(sha1('id_for_admin_signed_in_bidemi_project'), base64_encode('0'), intval(time() - 365 * 10 * (86400 * 30)), "/");
+            return redirect('/admin');
+        });
+
     });
 });

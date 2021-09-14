@@ -125,5 +125,23 @@ class Home extends Controller
         $sql = DB::select('SELECT * from books ORDER BY b_id DESC', []);
         return view('admin.auth.books.view')->with('data', ['_data' => $sql]);
     }
+
+    public function add_publication(){
+        return view('admin.auth.publication.add');
+    }
+
+    public function add_publication_now(Request $request){
+        $p_name = $request->p_name;
+        $p_content = $request->p_content;
+
+        DB::insert('INSERT into publication (p_title, p_content) values (?, ?)', [$p_name, $p_content]);
+
+        return redirect('/admin/view-publication');
+    }
+
+    public function view_publication(){
+        $sql = DB::select('SELECT * from publication ORDER BY p_id DESC', []);
+        return view('admin.auth.publication.view')->with('data', ['_data' => $sql]);
+    }
 }
 

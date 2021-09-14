@@ -76,10 +76,10 @@
                     </a>
                     <ul class="cat-sub-menu">
                         <li>
-                            <a href="{{url('/admin/view-articles')}}">Add Publication</a>
+                            <a href="{{url('/admin/add-publication')}}">Add Publication</a>
                         </li>
                         <li>
-                            <a href="{{url('/admin/create-article')}}">View Publication</a>
+                            <a href="{{url('/admin/view-publication')}}">View Publication</a>
                         </li>
                     </ul>
                 </li>
@@ -149,7 +149,7 @@
                 </li> --}}
 
                 <li>
-                    <a href="##"><span class="icon setting" aria-hidden="true"></span>Logout</a>
+                    <a href="{{url('/admin/logout')}}"><span class="icon setting" aria-hidden="true"></span>Logout</a>
                 </li>
             </ul>
         </div>
