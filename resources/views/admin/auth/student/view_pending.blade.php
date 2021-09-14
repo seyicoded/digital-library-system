@@ -27,8 +27,8 @@
                         <td>{{$dt->u_id}}</td>
                         <td>{{$dt->matric_numb}}</td>
                         <td>{{date("d M Y", strtotime($dt->date_created))}}</td>
-                        <td><button class="w3-btn w3-blue w3-round" onclick="window.location.href = '{{url('/admin/approve-student').'?u_id='.$dt->u_id}}'">approve</button></td>
-                        <td><button class="w3-btn w3-red w3-round" onclick="window.location.href = '{{url('/admin/decline-student').'?u_id='.$dt->u_id}}'">decline</button></td>
+                        <td><button class="w3-btn w3-blue w3-round" onclick="window.location.replace('{{url('/admin/approve-student').'?u_id='.$dt->u_id}}')">approve</button></td>
+                        <td><button class="w3-btn w3-red w3-round" onclick="window.location.replace('{{url('/admin/decline-student').'?u_id='.$dt->u_id}}')">decline</button></td>
                     </tr>
                 @endforeach
 

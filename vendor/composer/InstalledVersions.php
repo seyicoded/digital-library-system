@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '8ee652c9e7168e532df023e47b3d9a5e97d0c12b',
+    'reference' => '05722136c579e4c2aae87e837ca3bb8e309f00e1',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -43,6 +43,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'fcc88fa66895f8c1ff83f6145a5eff5fa2a0739a',
+    ),
+    'cloudinary/cloudinary_php' => 
+    array (
+      'pretty_version' => '1.20.0',
+      'version' => '1.20.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2a8e6ed5bc6cf024022c6fcc03b69e1ce92ccaab',
     ),
     'cordoval/hamcrest-php' => 
     array (
@@ -371,6 +380,15 @@ private static $installed = array (
       ),
       'reference' => '9f7a229a69d52506914b4bc61bfdb199d90c5547',
     ),
+    'jrm2k6/cloudder' => 
+    array (
+      'pretty_version' => '0.7.0',
+      'version' => '0.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd54a7cd7c880705ae565dcc078a6f81320f21b05',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -394,7 +412,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '8ee652c9e7168e532df023e47b3d9a5e97d0c12b',
+      'reference' => '05722136c579e4c2aae87e837ca3bb8e309f00e1',
     ),
     'laravel/tinker' => 
     array (

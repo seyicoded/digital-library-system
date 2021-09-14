@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Parsedown' => array($vendorDir . '/erusev/parsedown'),
     'Mockery' => array($vendorDir . '/mockery/mockery/library'),
+    'JD\\Cloudder' => array($vendorDir . '/jrm2k6/cloudder/src'),
 );
